@@ -1,5 +1,6 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
+import GameGrid from "./components/GameGrid";
 function App() {
   //use templateareas to define the layout of the grid
   // in the multiple dbl quoted strings we define row by row for the grid
@@ -19,7 +20,9 @@ function App() {
       <Show above='lg'>
         <GridItem area={"aside"}>Aside</GridItem>
       </Show>
-      <GridItem area={"main"}>Main</GridItem>
+      <GridItem area={"main"}>
+        <GameGrid />
+      </GridItem>
     </Grid>
   );
 }
