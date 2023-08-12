@@ -1,7 +1,30 @@
-import { Button, ButtonGroup } from "@chakra-ui/react";
-
+import { Grid, GridItem, Show } from "@chakra-ui/react";
 function App() {
-  return <Button colorScheme='blue'>Button</Button>;
+  //use templateareas to define the layout of the grid
+  // in the multiple dbl quoted strings we define row by row for the grid
+  // 1st row: 2 columns
+  // 2nd row: 2 OTHER columns
+  // we place items in the grid using gridItem and place using area property
+  return (
+    <Grid
+      templateAreas={{
+        base: `"nav" "main"`,
+        lg: `"nav nav" "aside main"`, //1024px
+      }}
+    >
+      <GridItem area={"nav"} bg={"coral"}>
+        Nav
+      </GridItem>
+      <Show above='lg'>
+        <GridItem area={"aside"} bg={"gold"}>
+          Aside
+        </GridItem>
+      </Show>
+      <GridItem area={"main"} bg={"dodgerblue"}>
+        Main
+      </GridItem>
+    </Grid>
+  );
 }
 
 export default App;
