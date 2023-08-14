@@ -14,12 +14,18 @@ function App() {
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`, //1024px
       }}
+      // to define a fixed width to the aside column such that when we have a bigger screen the main gamegrid
+      // will take up more space
+      templateColumns={{
+        base: "1fr", // ==> 1 fraction: main column takes all available space on small devices
+        lg: "200px 1fr", // ==> First column 200px and the second takes up available space
+      }}
     >
       <GridItem area={"nav"}>
         <NavBar />
       </GridItem>
       <Show above='lg'>
-        <GridItem area={"aside"}>
+        <GridItem area={"aside"} paddingX='5px'>
           <GenreList />
         </GridItem>
       </Show>
