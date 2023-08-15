@@ -6,11 +6,18 @@ import GenreList from "./components/GenreList";
 import { Genre } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
 import { Platform } from "./hooks/usePlatforms";
+
+export interface GameQuery {
+  genre: Genre | null;
+  platform: Platform | null;
+}
+
 function App() {
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
-    null
-  );
+  // refactoring: adding more state vars and passing them around is ugly
+  // Solution: pack related variables inside an object QUERY OBJECT PATTERN
+  // we create a query object GameQuery with all the information needed to query the games
+
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery); //initialize with empty object. properties might be null
   //use templateareas to define the layout of the grid
   // in the multiple dbl quoted strings we define row by row for the grid
   // 1st row: 2 columns
@@ -35,20 +42,19 @@ function App() {
       <Show above='lg'>
         <GridItem area={"aside"} paddingX='5px'>
           <GenreList
-            selectedGenre={selectedGenre}
-            onSelectGenre={(genre) => setSelectedGenre(genre)}
+            selectedGenre={gameQuery.genre}
+            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
           />
         </GridItem>
       </Show>
       <GridItem area={"main"}>
         <PlatformSelector
-          onSelectPlatform={(platform) => setSelectedPlatform(platform)}
-          selectedPlatform={selectedPlatform}
+          onSelectPlatform={(platform) =>
+            setGameQuery({ ...gameQuery, platform })
+          }
+          selectedPlatform={gameQuery.platform}
         />
-        <GameGrid
-          selectedGenre={selectedGenre}
-          selectedPlatform={selectedPlatform}
-        />
+        <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
   );
